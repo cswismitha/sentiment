@@ -1,6 +1,5 @@
 const reviews = require("../adapter/itunes");
 const ddb = require("../das/ddbv3")
-const sns = require("../notification/sns")
 const config = require("../config")
 const utils = require("../utils")
 

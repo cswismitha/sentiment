@@ -25,7 +25,6 @@ async function getReviewAnalysis() {
           }
         console.log('All items processed.');
         const items = await cosmosdas.listItems(container);
-        console.log('All items retrieved', items);
         const sentAnalysis = await reviews.getSentimentAnalysis(items);
         console.log('summary retrieved', sentAnalysis);
         // Save in summary table

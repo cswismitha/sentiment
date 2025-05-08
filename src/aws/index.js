@@ -1,4 +1,4 @@
-const getReviewAnalysis = require("../common/awslogic");
+const getReviewAnalysis = require("./awslogic");
 
 // Lambda function handler
 exports.handler = async (event) => {

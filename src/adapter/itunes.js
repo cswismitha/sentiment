@@ -18,16 +18,19 @@ async function getAppReviews() {
 }
 
 async function getSentimentAnalysis(feeds) {
+    let summary;
     try {
-        let comment;
+        let comment = '';
         feeds.forEach(element => {
             comment += ". " + element.content;
         });
-        const summary = await summarizer.getReviewSummary(comment);
-        return summary;
+        console.log('trying to get summaries', comment);
+        summary = await summarizer.getReviewSummary(comment);
+        console.log('summary received', summary);
     } catch (error) {
         console.log(error);
-    }
+    }    
+    return summary;
 }
 
 module.exports = {

@@ -1,5 +1,5 @@
 const { app } = require('@azure/functions');
-const getReviewAnalysis = require("../common/azurelogic");
+const getReviewAnalysis = require("./azurelogic");
 
 app.http('sentimentanalysis', {
     methods: ['GET', 'POST'],
