@@ -2,6 +2,7 @@ const reviews = require("../adapter/itunes");
 const ddb = require("../das/ddbv3")
 const config = require("../config")
 const utils = require("../utils")
+const sqs = require("../notifications/sqs")
 
 async function getReviewAnalysis() {
     const appId = config.appId;
@@ -30,6 +31,17 @@ async function getReviewAnalysis() {
   const sentAnalysis = await reviews.getSentimentAnalysis(items);
   // Save in summary table
   await saveSummary(sentAnalysis);
+  
+
+// Example usage:
+const message = {
+    orderId: '98765',
+    customerId: '43210',
+    items: ['productA', 'productB', 'productC'],
+    total: 75.50
+  };
+  
+  sqs.sendMessageToSQS(JSON.stringify(message));
   return sentAnalysis;
 };
 
@@ -41,7 +53,7 @@ async function saveSummary(summary) {
             "PK": { S : "APP#" + appId },
             "SK": { S: "SUMM#" + new Date().getTime() },
             "summary": { S : summary },
-            "updated": { S : new Date().getTime() }
+            "updated": { S : new Date() }
         };
         console.log(newItem);
         await ddb.createItem(newItem, table);

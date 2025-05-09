@@ -1,6 +1,7 @@
 const reviews = require('../adapter/itunes');
 const config = require('../config');
 const cosmosdas = require('../das/cosmosdb');
+const { sendMessageToQueue } = require('../notifications/storagequeue');
 
 async function getReviewAnalysis() {
     const { container } = await cosmosdas.getDatabaseAndContainer(config.cosmosdb.containerId);
@@ -25,6 +26,7 @@ async function getReviewAnalysis() {
           }
         console.log('All items processed.');
         const items = await cosmosdas.listItems(container);
+        await sendMessageToQueue('Hello');
         const sentAnalysis = await reviews.getSentimentAnalysis(items);
         console.log('summary retrieved', sentAnalysis);
         // Save in summary table
